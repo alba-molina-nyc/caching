@@ -44,6 +44,9 @@ class MemoItem(models.Model):
     is_active = models.BooleanField(default=True)
     quantity = models.IntegerField()
 
+    def sub_total(self):
+        return self.job.num_stones * 0.50
+
 
     
 
