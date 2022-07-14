@@ -53,6 +53,7 @@ class Order(models.Model):
         ('Completed', 'Completed'),
         ('Cancelled', 'Cancelled'),
     )
+    order_number = models.CharField(max_length=20)
     setter_fname = models.CharField(max_length=250, blank=True)
     setter_lname = models.CharField(max_length=250, blank=True)
     setter_email = models.EmailField(max_length=50)
@@ -61,6 +62,7 @@ class Order(models.Model):
     is_memoed = models.BooleanField(default=False) #only has been assigned when setter receives it
     status = models.CharField(max_length=10, choices=STATUS, default='New')
     created_at = models.DateTimeField(auto_now_add=True)
+    creator_name = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
 
