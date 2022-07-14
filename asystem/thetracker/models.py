@@ -4,6 +4,7 @@ from django.urls import reverse
 
 # Create your models here.
 
+#product
 class Job(models.Model):
     order_num = models.CharField(max_length=275)
     SKU = models.CharField(max_length=275)
@@ -26,7 +27,7 @@ class Job(models.Model):
         num_stones = self.num_stones * amt
         return num_stones
    
-
+#cart
 class Memo(models.Model):
     memo_id = models.CharField(max_length=250, blank=True)
     date_set = models.DateField(auto_now_add=True)
@@ -35,7 +36,7 @@ class Memo(models.Model):
     def __str__(self):
         return self.memo_id
 
-
+#cartitem
 class MemoItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)

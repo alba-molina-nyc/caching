@@ -5,4 +5,4 @@ from .models import Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['setter_fname', 'setter_lname', 'setter_email', 'note']

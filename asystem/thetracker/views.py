@@ -49,27 +49,21 @@ def add_memo(request, job_id):
    
     return redirect('memo') # redirect the user to the memo page
 
-def memo(request, total=0, quantity=0, memo_items=None): 
+def memo(request, memo_items=None): 
     try: 
         memo = Memo.objects.get(memo_id=_memo_id(request))
         memo_items = MemoItem.objects.filter(memo=memo, is_active=True)
 
-        for memo_item in memo_items:
-            # get total paying to the setter
-            total += (memo_item.job.num_stones * 0.50)
-            quantity += memo_item.quantity
     except ObjectDoesNotExist: # but if the memo_item does not exst pass
         pass
 
     context = {
-        'total': total,
-        'quantity': quantity,
         'memo_items': memo_items,
     }
     return render(request, 'memo.html', context)
 
+# -------------------
 # create order 
-
 def place_order(request):
     current_user = request.user
     # if cart count is less or equal to 0 then send back to list of jobs
@@ -77,6 +71,16 @@ def place_order(request):
     memo_count = memo_items.count()
     if memo_count <= 0:
         return redirect('home') # return to the list of jobs 
+    
 
     if request.method == 'POST':
         form = OrderForm(request.POST) # we need to receive post from the order form
+        if form.is_valid():
+            # store all the info inside the order table
+            data = OrderForm() # instance of order
+            data.setter_fname= form.cleaned_data('setter_fname')
+            data.setter_lname= form.cleaned_data('setter_lname')
+            data.setter_email= form.cleaned_data('setter_email')
+            data.note= form.cleaned_data('note')
+            
+            
