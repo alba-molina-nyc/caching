@@ -30,7 +30,6 @@ class Job(models.Model):
 class Memo(models.Model):
     memo_id = models.CharField(max_length=250, blank=True)
     date_set = models.DateField(auto_now_add=True)
-    setter_name = models.CharField(max_length=250, blank=True)
    
     
     def __str__(self):
@@ -46,6 +45,23 @@ class MemoItem(models.Model):
 
     def sub_total(self):
         return self.job.num_stones * 0.50
+
+
+# create order model
+class Order(models.Model):
+    STATUS = (
+        ('Completed', 'Completed'),
+        ('Cancelled', 'Cancelled'),
+    )
+    setter_fname = models.CharField(max_length=250, blank=True)
+    setter_lname = models.CharField(max_length=250, blank=True)
+    setter_email = models.EmailField(max_length=50)
+    note = models.CharField(max_length=100, blank=True)
+    order_total = models.FloatField()
+    is_memoed = models.BooleanField(default=False) #only has been assigned when setter receives it
+    status = models.CharField(max_length=10, choices=STATUS, default='New')
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
 
     
